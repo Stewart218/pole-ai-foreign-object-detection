@@ -8,9 +8,16 @@ Author : Stewart218
 
 import os
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 def main():
+
+    # 设置Matplotlib中文字体
+    plt.rcParams["font.sans-serif"] = ["Microsoft YaHei"]
+    plt.rcParams["axes.unicode_minus"] = False
+
     print("=" * 60)
     print("Task3 - Exploratory Data Analysis (EDA)")
     print("=" * 60)
@@ -30,6 +37,9 @@ def main():
     print("\n数据读取成功！")
     print(df.head())
 
+    figure_dir = r"E:\Pole_AI_Project\results\figures"
+    os.makedirs(figure_dir, exist_ok=True)
+
     # ==================================================
     # 一、类别统计
     # ==================================================
@@ -38,6 +48,90 @@ def main():
     print("=" * 60)
 
     class_count = df["Class"].value_counts().sort_index()
+
+    # ==================================================
+    # 分辨率统计
+    # ==================================================
+
+    resolution_count = df["Resolution"].value_counts().sort_index()
+
+    print("\n" + "=" * 60)
+    print("分辨率统计")
+    print("=" * 60)
+
+    print(resolution_count)
+
+    # ==================================================
+    # 分辨率分布图（Matplotlib）
+    # ==================================================
+
+    plt.figure(figsize=(8, 5))
+
+    plt.bar(
+        resolution_count.index,
+        resolution_count.values
+    )
+
+    plt.title("Resolution Distribution")
+    plt.xlabel("Resolution")
+    plt.ylabel("Number of Images")
+
+    # 在柱子上显示数量
+    for i, value in enumerate(resolution_count.values):
+        plt.text(
+            i,
+            value + 0.5,
+            str(value),
+            ha="center"
+        )
+
+    plt.tight_layout()
+
+    plt.savefig(
+        os.path.join(
+            figure_dir,
+            "resolution_distribution.png"
+        ),
+        dpi=300
+    )
+
+    plt.close()
+
+    # ===============================
+    # 类别数量柱状图（Matplotlib）
+    # ===============================
+
+    plt.figure(figsize=(8, 5))
+
+    plt.bar(
+        class_count.index,
+        class_count.values
+    )
+
+    plt.title("Class Distribution")
+    plt.xlabel("Class")
+    plt.ylabel("Number of Images")
+
+    # 在柱子上显示数字
+    for i, value in enumerate(class_count.values):
+        plt.text(
+            i,
+            value + 0.3,
+            str(value),
+            ha="center"
+        )
+
+    plt.tight_layout()
+
+    plt.savefig(
+        os.path.join(
+            figure_dir,
+            "class_distribution.png"
+        ),
+        dpi=300
+    )
+
+    plt.close()
 
     class_percent = (
             class_count / class_count.sum() * 100

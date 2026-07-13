@@ -358,15 +358,17 @@ class DatasetInspector:
 
     # -----------------------------------------------------
 
-    def run(self):
+    def run(self) -> List[ImageInfo]:
 
-        self.scan_dataset()
+        images = self.scan_dataset()
 
         self.print_statistics()
 
         self.export_csv()
 
         self.generate_markdown_report()
+
+        return images
 
 
 # =========================================================

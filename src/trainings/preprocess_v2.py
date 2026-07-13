@@ -144,7 +144,7 @@ class ProjectPaths:
     def __post_init__(self):
 
         # 项目根目录
-        self.project_root = Path(__file__).resolve().parent.parent
+        self.project_root = Path(__file__).resolve().parent.parent.parent
 
         # 数据目录
         self.data_dir = self.project_root / "data"
@@ -231,12 +231,12 @@ class ProjectPaths:
 
         if not self.images_train.exists():
             raise FileNotFoundError(
-                f"Images directory not found:\n{self.images_dir}"
+                f"Images directory not found:\n{self.images_train}"
             )
 
         if not self.labels_train.exists():
             raise FileNotFoundError(
-                f"Labels directory not found:\n{self.labels_dir}"
+                f"Labels directory not found:\n{self.labels_train}"
             )
 
     def initialize(self) -> None:
@@ -390,7 +390,7 @@ class DatasetScanner:
 
         for suffix in self.config.image_suffixes:
             image_files.extend(
-                self.paths.train_images.rglob(f"*{suffix}")
+                self.paths.images_train.rglob(f"*{suffix}")
             )
 
         image_files.sort()
@@ -578,12 +578,9 @@ class DatasetScanner:
 
         stats.total_images = len(image_infos)
 
-        target_classes = self._get_target_classes(image_infos)
 
         for image_info in image_infos:
 
-            if image_info.primary_class not in target_classes:
-                continue
 
             if image_info.is_valid:
                 stats.valid_images += 1
@@ -724,9 +721,14 @@ class ImageCleaner:
     4. 返回有效样本
     """
 
-    def __init__(self, config: PreprocessConfig):
+    def __init__(
+            self,
+            config: PreprocessConfig,
+            paths: ProjectPaths
+    ):
 
         self.config = config
+        self.paths = paths
 
     @staticmethod
     def _calculate_md5(image_path: Path) -> str:
@@ -766,16 +768,14 @@ class ImageCleaner:
 
         md5_cache = {}
 
-        target_classes = self._get_target_classes(image_infos)
 
         for image_info in tqdm(
                 image_infos,
-                desc="Augmenting",
+                desc="Cleaning Dataset",
                 disable=not self.config.show_progress
         ):
 
-            if image_info.primary_class not in target_classes:
-                continue
+
 
             # -------------------------
             # 已失效图片

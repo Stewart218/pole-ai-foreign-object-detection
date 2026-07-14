@@ -1141,12 +1141,12 @@ class DataAugmentor:
         )
 
         image_path = (
-            self.paths.processed_images /
+            self.paths.train_images /
             image_name
         )
 
         label_path = (
-            self.paths.processed_labels /
+            self.paths.train_labels /
             label_name
         )
 
@@ -1888,35 +1888,27 @@ def main():
     # 4. Data Augmentation
     # ------------------------------------------------------
 
-    augmentor = DataAugmentor(
-        config,
-        paths
-    )
-
-
-    image_infos = augmentor.augment(
-        image_infos
-    )
-
-
-    logging.info(
-        "After augmentation: %d images",
-        len(image_infos)
-    )
-
-
-    # ------------------------------------------------------
-    # 5. Dataset Split
-    # ------------------------------------------------------
-
     splitter = DatasetSplitter(
         config,
         paths
     )
 
-
     train_infos, val_infos, test_infos = splitter.split(
         image_infos
+    )
+
+    augmentor = DataAugmentor(
+        config,
+        paths
+    )
+
+    train_infos = augmentor.augment(
+        train_infos
+    )
+
+    logging.info(
+        "After augmentation: %d images",
+        len(train_infos)
     )
 
 

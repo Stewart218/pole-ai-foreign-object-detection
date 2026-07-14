@@ -2,23 +2,23 @@
 
 ## Dataset Summary
 
-- Total Images: 248
+- Total Images: 230
 - Train Images: 212
-- Validation Images: 36
+- Validation Images: 18
 
 ## Class Distribution
 
 ### train
 
-- Class 0: 51
-- Class 1: 60
+- Class 2: 52
 - Class 3: 48
-- Class 2: 53
+- Class 0: 52
+- Class 1: 60
 
 ### val
 
-- Class 0: 9
-- Class 2: 8
-- Class 1: 11
-- Class 3: 8
+- Class 0: 4
+- Class 3: 4
+- Class 1: 5
+- Class 2: 5
 

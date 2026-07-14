@@ -27,10 +27,11 @@ env/
 # Dataset（原始图片、训练数据）
 # =========================
 data/raw/
-data/yolo_dataset_v1/
-data/yolo_dataset_v2/
-data/predictions/
-data/annotations_v1/
+data/yolo_dataset
+data/bootstrap_predictions
+data/processed/images
+data/processed/labels
+
 
 # =========================
 # Model Weights

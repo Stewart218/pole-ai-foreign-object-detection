@@ -1,5 +1,0 @@
-bird_nest
-balloon
-plastic_bag
-other_foreign_object
-

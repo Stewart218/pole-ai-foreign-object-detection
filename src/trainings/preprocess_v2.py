@@ -86,6 +86,16 @@ class PreprocessConfig:
     stratified_split: bool = True
 
     # ==========================
+    # Dataset Split
+    # ==========================
+
+    train_ratio: float = 0.8
+
+    val_ratio: float = 0.2
+
+    random_seed: int = 42
+
+    # ==========================
     # 数据增强
     # ==========================
 
@@ -388,9 +398,17 @@ class DatasetScanner:
 
         image_files = []
 
+
+
         for suffix in self.config.image_suffixes:
             image_files.extend(
                 self.paths.images_train.rglob(f"*{suffix}")
+            )
+
+        for file in self.paths.images_train.iterdir():
+            logging.info(
+                "Directory Item : %s",
+                file.name
             )
 
         image_files.sort()
@@ -411,7 +429,7 @@ class DatasetScanner:
         """
 
         label_path = (
-                self.paths.train_labels /
+                self.paths.labels_train /
                 image_path.with_suffix(".txt").name
         )
 
@@ -507,11 +525,11 @@ class DatasetScanner:
         label_path = self._find_label(image_path)
 
         boxes = self._load_yolo_label(label_path)
-
         primary_class = None
 
         if boxes:
             primary_class = boxes[0].class_id
+
 
         return ImageInfo(
 
@@ -1131,22 +1149,45 @@ class DataAugmentor:
         )
 
         return ImageInfo(
+
             image_path=image_path,
+
             label_path=label_path,
+
             file_name=image_name,
+
             width=image.shape[1],
+
             height=image.shape[0],
+
+            channels=image_info.channels,
+
             bboxes=[
+
                 BoundingBox(
+
                     class_id=box.class_id,
+
                     x_center=box.x_center,
+
                     y_center=box.y_center,
+
                     width=box.width,
+
                     height=box.height
+
                 )
+
                 for box in image_info.bboxes
+
             ],
-            is_valid=True
+
+            primary_class=image_info.primary_class,
+
+            is_valid=True,
+
+            message=image_info.message
+
         )
 
     def augment(
@@ -1602,8 +1643,16 @@ def main():
 
     config = PreprocessConfig()
 
-    paths = ProjectPaths(
-        config
+    paths = ProjectPaths(config)
+
+    paths.initialize()
+
+    if paths.processed_dir.exists():
+        shutil.rmtree(paths.processed_dir)
+
+    paths.processed_dir.mkdir(
+        parents=True,
+        exist_ok=True
     )
 
     if paths.processed_dir.exists():
@@ -1723,7 +1772,7 @@ def main():
         train_infos,
         val_infos
     )
-    return train_infos, val_infos
+
 
     logging.info(
         "=" * 60
@@ -1737,6 +1786,7 @@ def main():
         "=" * 60
     )
 
+    return train_infos, val_infos
 # ==========================================================
 # Program Entry
 # ==========================================================

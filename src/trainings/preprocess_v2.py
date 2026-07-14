@@ -79,7 +79,11 @@ class PreprocessConfig:
     # 数据划分
     # ==========================
 
-    train_ratio: float = 0.8
+    train_ratio: float = 0.7
+
+    val_ratio: float = 0.2
+
+    test_ratio: float = 0.1
 
     random_seed: int = 42
 
@@ -176,6 +180,10 @@ class ProjectPaths:
         # ==========================
 
         self.processed_dir = self.data_dir / "processed"
+        self.dataset_yaml = (
+                self.processed_dir
+                / "dataset.yaml"
+        )
 
         self.processed_images = self.processed_dir / "images"
         self.processed_labels = self.processed_dir / "labels"
@@ -188,9 +196,11 @@ class ProjectPaths:
 
         self.train_images = self.split_images / "train"
         self.val_images = self.split_images / "val"
+        self.test_images = self.split_images / "test"
 
         self.train_labels = self.split_labels / "train"
         self.val_labels = self.split_labels / "val"
+        self.test_labels = self.split_labels / "test"
 
         self.report_dir = self.processed_dir / "reports"
 
@@ -219,9 +229,11 @@ class ProjectPaths:
 
             self.train_images,
             self.val_images,
+            self.test_images,
 
             self.train_labels,
             self.val_labels,
+            self.test_labels,
 
             self.report_dir,
 
@@ -1276,6 +1288,22 @@ class DatasetSplitter:
             exist_ok=True
         )
 
+        self.paths.test_images.mkdir(
+
+            parents=True,
+
+            exist_ok=True
+
+        )
+
+        self.paths.test_labels.mkdir(
+
+            parents=True,
+
+            exist_ok=True
+
+        )
+
     def _copy_sample(
         self,
         image_info: ImageInfo,
@@ -1304,9 +1332,13 @@ class DatasetSplitter:
         return new_info
 
     def split(
-        self,
-        image_infos: List[ImageInfo]
-    ) -> tuple[list[ImageInfo], list[ImageInfo]]:
+            self,
+            image_infos: List[ImageInfo]
+    ) -> tuple[
+        list[ImageInfo],
+        list[ImageInfo],
+        list[ImageInfo]
+    ]:
 
         labels = [
 
@@ -1316,11 +1348,12 @@ class DatasetSplitter:
 
         ]
 
-        train_infos, val_infos = train_test_split(
+        # 第一次划分：Train 70%，Temp 30%
+        train_infos, temp_infos = train_test_split(
 
             image_infos,
 
-            test_size=self.config.val_ratio,
+            train_size=self.config.train_ratio,
 
             random_state=self.config.random_seed,
 
@@ -1330,9 +1363,40 @@ class DatasetSplitter:
 
         )
 
+        # Temp对应标签
+        temp_labels = [
+
+            image.primary_class
+
+            for image in temp_infos
+
+        ]
+
+        # 第二次划分：Val/Test = 20%/10%
+        val_ratio_in_temp = (
+                self.config.val_ratio /
+                (self.config.val_ratio + self.config.test_ratio)
+        )
+
+        val_infos, test_infos = train_test_split(
+
+            temp_infos,
+
+            train_size=val_ratio_in_temp,
+
+            random_state=self.config.random_seed,
+
+            shuffle=True,
+
+            stratify=temp_labels
+
+        )
+
         train_results = []
 
         val_results = []
+
+        test_results = []
 
         for image_info in tqdm(
 
@@ -1382,6 +1446,29 @@ class DatasetSplitter:
 
             )
 
+        for image_info in tqdm(
+
+                test_infos,
+
+                desc="Copy Test",
+
+                disable=not self.config.show_progress
+
+        ):
+            test_results.append(
+
+                self._copy_sample(
+
+                    image_info,
+
+                    self.paths.test_images,
+
+                    self.paths.test_labels
+
+                )
+
+            )
+
         logging.info(
 
             "Train Samples : %d",
@@ -1398,7 +1485,19 @@ class DatasetSplitter:
 
         )
 
-        return train_results, val_results
+        logging.info(
+
+            "Test Samples : %d",
+
+            len(test_results)
+
+        )
+
+        return (
+            train_results,
+            val_results,
+            test_results
+        )
 
 # ==========================================================
 # Report Generator
@@ -1449,7 +1548,9 @@ class ReportGenerator:
     def generate(
         self,
         train_infos: List[ImageInfo],
-        val_infos: List[ImageInfo]
+        val_infos: List[ImageInfo],
+        test_infos: List[ImageInfo]
+
     ):
 
         train_counter = self._count_classes(
@@ -1458,6 +1559,10 @@ class ReportGenerator:
 
         val_counter = self._count_classes(
             val_infos
+        )
+
+        test_counter = self._count_classes(
+            test_infos
         )
 
 
@@ -1596,7 +1701,63 @@ class ReportGenerator:
                     )
 
                 f.write("\n")
+# ==========================================================
+# Dataset YAML Generator
+# ==========================================================
 
+class DatasetYamlGenerator:
+    """
+    YOLOv8 数据集配置文件生成器
+
+    功能：
+    1. 自动生成 dataset.yaml
+    2. 配置 Train / Validation / Test 路径
+    3. 配置类别名称
+    """
+
+    def __init__(
+        self,
+        paths: ProjectPaths
+    ):
+
+        self.paths = paths
+
+    def generate(self) -> None:
+
+        yaml_path = self.paths.dataset_yaml
+
+        yaml_content = f"""path: {self.paths.split_dir.as_posix()}
+
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: bird_nest
+  1: balloon
+  2: plastic_bag
+  3: other_foreign_object
+"""
+
+        with open(
+
+            yaml_path,
+
+            "w",
+
+            encoding="utf-8"
+
+        ) as f:
+
+            f.write(yaml_content)
+
+        logging.info(
+
+            "Dataset YAML Generated : %s",
+
+            yaml_path
+
+        )
 # ==========================================================
 # Main Pipeline
 # ==========================================================
@@ -1754,7 +1915,7 @@ def main():
     )
 
 
-    train_infos, val_infos = splitter.split(
+    train_infos, val_infos, test_infos = splitter.split(
         image_infos
     )
 
@@ -1770,9 +1931,17 @@ def main():
 
     reporter.generate(
         train_infos,
-        val_infos
+        val_infos,
+        test_infos
     )
 
+    yaml_generator = DatasetYamlGenerator(
+
+        paths
+
+    )
+
+    yaml_generator.generate()
 
     logging.info(
         "=" * 60

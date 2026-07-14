@@ -1,21 +1,21 @@
 {
     "dataset": {
-        "train_images": 67,
-        "val_images": 17,
-        "total_images": 84
+        "train_images": 212,
+        "val_images": 36,
+        "total_images": 248
     },
     "class_distribution": {
         "train": {
-            "3": 19,
-            "0": 16,
-            "1": 16,
-            "2": 16
+            "0": 51,
+            "1": 60,
+            "3": 48,
+            "2": 53
         },
         "val": {
-            "1": 4,
-            "0": 4,
-            "3": 5,
-            "2": 4
+            "0": 9,
+            "2": 8,
+            "1": 11,
+            "3": 8
         }
     }
 }

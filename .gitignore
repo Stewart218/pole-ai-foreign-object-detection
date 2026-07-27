@@ -26,12 +26,14 @@ env/
 # =========================
 # Dataset（原始图片、训练数据）
 # =========================
+data
 data/raw/
 data/yolo_dataset
 data/bootstrap_predictions
 data/processed/images
 data/processed/labels
 data/processed/split
+
 
 
 # =========================

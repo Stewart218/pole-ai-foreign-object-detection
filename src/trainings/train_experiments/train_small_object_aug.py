@@ -108,7 +108,7 @@ class SmallObjectTrainer:
 
 
         self.model = YOLO(
-            "yolov8n.pt"
+            "../yolov8n.pt"
         )
 
 

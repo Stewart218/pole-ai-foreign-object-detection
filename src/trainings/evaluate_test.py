@@ -1,84 +1,72 @@
 from ultralytics import YOLO
 
 
-# ============================
-# 1. 模型路径
-# ============================
+def main():
 
-model_path = (
-    r"E:\Pole_AI_Project\src\trainings\runs\detect\runs\train\week3_small_object_aug\weights\best.pt"
-)
+    model_path = (
+        r"E:\Pole_AI_Project\runs\train\week3_aug_v2\weights\best.pt"
+    )
 
 
+    data_yaml = (
+        r"E:\Pole_AI_Project\data\processed\dataset.yaml"
+    )
 
 
-# ============================
-# 2. 数据集yaml
-# ============================
-
-data_yaml = (
-    r"E:\Pole_AI_Project\data\processed\dataset.yaml"
-)
+    model = YOLO(model_path)
 
 
+    results = model.val(
 
-# ============================
-# 3. 加载模型
-# ============================
+        data=data_yaml,
 
-model = YOLO(model_path)
+        split="test",
 
+        imgsz=640,
 
+        batch=8,
 
-# ============================
-# 4. test集验证
-# ============================
+        workers=0,
 
-results = model.val(
+        device=0
 
-    data=data_yaml,
-
-    split="test",
-
-    imgsz=640,
-
-    batch=16,
-
-    device=0
-
-)
+    )
 
 
-
-# ============================
-# 5. 输出指标
-# ============================
-
-
-print("==============================")
-print("Evaluation Result")
-print("==============================")
+    print("==============================")
+    print("Evaluation Result")
+    print("==============================")
 
 
-print(
-    "Precision:",
-    results.box.mp
-)
+    print(
+        "Precision:",
+        results.box.mp
+    )
 
 
-print(
-    "Recall:",
-    results.box.mr
-)
+    print(
+        "Recall:",
+        results.box.mr
+    )
 
 
-print(
-    "mAP50:",
-    results.box.map50
-)
+    print(
+        "mAP50:",
+        results.box.map50
+    )
 
 
-print(
-    "mAP50-95:",
-    results.box.map
-)
+    print(
+        "mAP50-95:",
+        results.box.map
+    )
+
+
+
+if __name__ == "__main__":
+
+    import multiprocessing
+
+    multiprocessing.freeze_support()
+
+    main()

@@ -82,7 +82,7 @@ OPTIMIZED_MODEL = (
     /
     "train"
     /
-    "week3_lr_opt"
+    "week3_aug_v2"
     /
     "weights"
     /

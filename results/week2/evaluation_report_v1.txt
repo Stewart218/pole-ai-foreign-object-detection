@@ -1,0 +1,39 @@
+============================================================
+YOLOv8 Baseline Model Evaluation Report
+============================================================
+
+Model
+----------------------------------------
+best.pt
+
+Dataset
+----------------------------------------
+Validation Set
+
+Evaluation Time
+----------------------------------------
+2026-07-16 23:02:27
+
+Metrics
+----------------------------------------
+Precision     : 0.8618
+Recall        : 0.5921
+mAP@0.5       : 0.6450
+mAP@0.5:0.95  : 0.2857
+
+Performance Analysis
+----------------------------------------
+Advantages:
+- Baseline training pipeline completed successfully.
+- Model can detect part of foreign object targets.
+
+Limitations:
+- Dataset scale is relatively small.
+- Recall indicates missing detection problems remain.
+- Small targets and complex backgrounds affect detection performance.
+- mAP50-95 shows localization accuracy still needs improvement.
+
+Conclusion:
+The baseline model is used as the reference model for further optimization in later stages.
+
+============================================================

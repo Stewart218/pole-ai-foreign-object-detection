@@ -1,0 +1,9 @@
+Dataset Augmentation Report
+========================================
+
+balloon: 190
+bird_nest: 96
+other_foreign_object: 150
+plastic_bag: 198
+
+Total images: 634

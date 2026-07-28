@@ -3,7 +3,7 @@ Week3 Task4
 Final Model Inference
 
 使用最终模型:
-YOLOv8n + AdamW
+YOLOv8n + Class Balanced Augmentation
 
 生成最终推理效果图
 """
@@ -36,7 +36,7 @@ MODEL_PATH = (
     /
     "train"
     /
-    "week3_lr_opt"
+    "week3_aug_v2"
     /
     "weights"
     /

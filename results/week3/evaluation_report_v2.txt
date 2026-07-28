@@ -1,0 +1,302 @@
+============================================================
+Transmission Line Foreign Object Detection
+Model Evaluation Report V2
+============================================================
+
+Project:
+AI-based Foreign Object Detection for Transmission Lines
+
+Framework:
+YOLOv8 + Ultralytics
+
+Dataset:
+Pole Foreign Object Dataset
+
+Classes:
+1. bird_nest
+2. balloon
+3. plastic_bag
+4. other_foreign_object
+
+
+============================================================
+1. Evaluation Description
+============================================================
+
+本报告针对项目中完成的多组模型优化实验进行统一测试评估。
+
+所有模型均采用相同独立测试集进行验证，
+测试集路径：
+
+data/final_dataset/images/test
+
+评价指标包括：
+
+- Precision
+- Recall
+- mAP@0.5
+- mAP@0.5:0.95
+- Inference Speed
+
+
+============================================================
+2. Model Performance Comparison
+============================================================
+
+
+------------------------------------------------------------
+Experiment 0
+Baseline YOLOv8n
+------------------------------------------------------------
+
+Optimization:
+None
+
+Parameters:
+Model: YOLOv8n
+
+Results:
+
+Precision: 0.649
+Recall:    0.667
+mAP50:     0.657
+mAP50-95:  0.204
+
+
+Analysis:
+
+Baseline模型能够完成基本异物检测任务，
+但对于部分稀缺类别存在漏检问题，
+尤其塑料袋类别检测能力不足。
+
+
+------------------------------------------------------------
+Experiment 1
+YOLOv8s
+------------------------------------------------------------
+
+Optimization:
+Replace YOLOv8n with YOLOv8s
+
+Results:
+
+Precision: 0.287
+Recall:    0.449
+mAP50:     0.342
+mAP50-95:  0.158
+
+
+Analysis:
+
+增加模型规模未带来性能提升。
+
+由于当前数据集规模较小，
+YOLOv8s参数量增加导致模型训练难度提升，
+泛化能力下降。
+
+
+------------------------------------------------------------
+Experiment 2
+YOLOv8n + AdamW Optimization
+------------------------------------------------------------
+
+Optimization:
+
+Optimizer:
+AdamW
+
+Learning rate adjustment
+
+Results:
+
+Precision: 0.703
+Recall:    0.658
+mAP50:     0.655
+mAP50-95:  0.154
+
+
+Analysis:
+
+优化器调整提高了模型预测置信度，
+Precision有所提升，
+但Recall变化有限。
+
+
+------------------------------------------------------------
+Experiment 3
+YOLOv8n + Small Object Augmentation
+------------------------------------------------------------
+
+Optimization:
+
+Small object enhancement
+
+Data augmentation
+
+Results:
+
+Precision: 0.253
+Recall:    0.333
+mAP50:     0.383
+mAP50-95:  0.128
+
+
+Analysis:
+
+单纯增强小目标数据未有效改善模型性能。
+
+可能原因：
+
+1. 增强样本分布与真实场景存在差异；
+2. 数据量仍然不足；
+3. 部分增强方式引入噪声。
+
+
+------------------------------------------------------------
+Experiment 4
+YOLOv8n + Class Balanced Augmentation
+(Final Model)
+------------------------------------------------------------
+
+Optimization:
+
+Class balanced augmentation
+
+Brightness enhancement
+
+HSV augmentation
+
+Random crop
+
+类别针对性增强
+
+
+Results:
+
+Precision: 0.900
+Recall:    0.917
+mAP50:     0.913
+mAP50-95:  0.116
+
+
+Class Performance:
+
+
+Class                  Precision Recall  mAP50
+
+bird_nest              0.979    1.000   0.995
+
+balloon                0.660    0.667   0.665
+
+plastic_bag            0.978    1.000   0.995
+
+other_foreign_object   0.983    1.000   0.995
+
+
+Analysis:
+
+类别均衡增强策略显著提升模型性能。
+
+相比Baseline：
+
+mAP50:
+0.657 -> 0.913
+
+提升:
++39.0%
+
+
+Recall:
+0.667 -> 0.917
+
+提升:
++37.5%
+
+
+模型能够有效降低稀缺类别漏检问题。
+
+
+============================================================
+3. Final Model Selection
+============================================================
+
+
+最终选择：
+
+YOLOv8n + Class Balanced Augmentation
+
+
+模型文件：
+
+runs/train/week3_aug_v2/weights/best.pt
+
+
+选择原因：
+
+1. mAP50达到0.913
+
+2. Precision达到0.900，
+   误检率较低；
+
+3. Recall达到0.917，
+   漏检情况明显改善；
+
+4. 模型规模较小，
+   推理速度满足实际部署需求。
+
+
+============================================================
+4. Remaining Problems
+============================================================
+
+
+虽然最终模型达到验收指标，
+但仍存在以下问题：
+
+1. 气球类别检测效果相对较低：
+
+mAP50:
+0.665
+
+
+原因：
+
+- 气球外观变化较大；
+- 与天空背景相似；
+- 有效训练样本不足。
+
+
+2. mAP50-95指标较低：
+
+说明：
+
+模型能够定位目标，
+但边界框精细定位能力仍有限。
+
+
+============================================================
+5. Conclusion
+============================================================
+
+
+通过多组优化实验验证：
+
+单纯增加模型复杂度并不能提升小规模输电线路异物检测性能。
+
+针对数据集特点进行类别均衡增强，
+能够有效提升模型泛化能力。
+
+最终模型：
+
+YOLOv8n + Class Balanced Augmentation
+
+在独立测试集达到：
+
+mAP50 = 0.913
+
+
+
+
+============================================================
+END
+============================================================

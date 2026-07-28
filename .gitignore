@@ -50,7 +50,8 @@ data/raw/
 data/annotation/
 data/processed/
 data/augmented_dataset/
-
+data/difficulty_samples
+data/processed_augmented
 
 # 增强数据
 **/augmented/
@@ -89,6 +90,8 @@ runs/detect/
 
 # Tensorboard
 runs/*/events.out.tfevents.*
+
+results/
 
 
 # ==================================================

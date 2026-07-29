@@ -39,7 +39,7 @@ Pole_AI_Project
 ├── README.md
 ├── PROJECT_STRUCTURE.md
 ├── requirements.txt
-│
+├── demo.py
 │
 ├── data
 │   │
@@ -119,10 +119,10 @@ Pole_AI_Project
 │   │   └── runs
 │   │
 │   │
-│   ├── evaluation
+│   └── evaluation
 │      │
 │      ├── evaluate_test.py
-│      ├── evaluate_all_models.py
+│      └── evaluate_all_models.py
 │   
 │
 ├── runs
@@ -132,7 +132,7 @@ Pole_AI_Project
 │       ├── baseline_yolov8n
 │       ├── week3_aug_v2
 │       ├── week3_yolov8s
-│       ├── week3_lr_opt
+│       └── week3_lr_opt
 │       
 │
 │
@@ -147,15 +147,16 @@ Pole_AI_Project
 │       ├── final_inference
 │       └── evaluation_report_v2.txt
 │   
-└── reports
+├── reports
 │
 │
-└── docs
-    │
-    ├── model_comparison.md
-    └── model_technical_summary.md
-
-
+├── docs
+│    │
+│    ├── model_comparison.md
+│    ├── model_technical_summary.md
+│    ├── eveluation_metrics.md
+│    └── final_model_evaluation_report.md
+└──demo_results
 ---
 
 # 3. Directory Description
@@ -294,6 +295,10 @@ labels/
 - 图片预测
 - 困难样本测试
 - 结果可视化
+
+## demo_results/
+
+保存demo.py检测结果。
 
 
 

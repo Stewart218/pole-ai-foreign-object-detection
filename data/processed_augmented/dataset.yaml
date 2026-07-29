@@ -1,9 +1,0 @@
-path: E:\Pole_AI_Project\data\processed_augmented
-train: images/train
-val: images/val
-test: images/test
-names:
-  0: bird_nest
-  1: balloon
-  2: plastic_bag
-  3: other_foreign_object

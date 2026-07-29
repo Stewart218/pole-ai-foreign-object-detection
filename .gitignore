@@ -131,3 +131,14 @@ logs/
 !docs/
 !README.md
 !PROJECT_STRUCTURE.md
+
+# ==================================================
+# src
+# ==================================================
+
+src/analysis
+src/inference
+src/inspection
+
+# Demo output
+demo_results/

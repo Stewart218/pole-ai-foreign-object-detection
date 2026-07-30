@@ -1,0 +1,58 @@
+name: pole_ai39
+
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+
+dependencies:
+
+  # Python
+  - python=3.9.25
+
+
+  # Scientific Computing
+  - numpy=2.0.2
+  - pandas=2.3.0
+  - matplotlib=3.9.4
+
+
+  # Image Processing
+  - opencv=4.10.0
+
+
+  # Jupyter (optional)
+  - notebook
+  - ipykernel
+
+
+  # pip packages
+  - pip
+
+
+  - pip:
+
+      # Deep Learning Framework
+      - torch==2.8.0
+      - torchvision
+      - torchaudio
+
+
+      # YOLO Framework
+      - ultralytics==8.4.89
+
+
+      # Data Processing
+      - tqdm
+      - pyyaml
+      - pillow
+
+
+      # Visualization
+      - seaborn
+
+
+      # Utility
+      - scikit-learn

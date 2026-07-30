@@ -69,7 +69,6 @@ data/processed_augmented
 # ==================================================
 
 # 忽略所有训练权重
-runs/
 
 *.pt
 *.onnx
@@ -84,14 +83,10 @@ runs/
 # Training Results
 # ==================================================
 
-# YOLO训练输出
-runs/train/
-runs/detect/
+
 
 # Tensorboard
-runs/*/events.out.tfevents.*
 
-results/
 
 
 # ==================================================
@@ -139,6 +134,7 @@ logs/
 src/analysis
 src/inference
 src/inspection
+src/preprocess/preprocess.py
 
 # Demo output
 demo_results/

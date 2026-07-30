@@ -110,14 +110,13 @@ Pole_AI_Project
 │   │   ├── predict_final.py
 │   │   ├── visualize_results.py
 │   │   │
-│   │   ├── train_experiments
-│   │   │   ├── train_aug_v2.py
-│   │   │   ├── train_baseline.py
-│   │   │   └── train_lr_opt.py
-│   │   │   └── train_yolov8s.py
-│   │   │
-│   │   └── runs
-│   │
+│   │   └── train_experiments
+│   │       ├── train_aug_v2.py
+│   │       ├── train_baseline.py
+│   │       ├── train_lr_opt.py
+│   │       └── train_yolov8s.py
+│   │   
+│   ├── visualize_results.py
 │   │
 │   └── evaluation
 │      │
@@ -133,21 +132,6 @@ Pole_AI_Project
 │       ├── week3_aug_v2
 │       ├── week3_yolov8s
 │       └── week3_lr_opt
-│       
-│
-│
-├── results
-│   │
-│   │
-│   ├── week2
-│   │
-│   └── week3
-│       │
-│       ├── comparison
-│       ├── final_inference
-│       └── evaluation_report_v2.txt
-│   
-├── reports
 │
 │
 ├── docs
@@ -156,6 +140,14 @@ Pole_AI_Project
 │    ├── model_technical_summary.md
 │    ├── eveluation_metrics.md
 │    └── final_model_evaluation_report.md
+│
+├── results
+│   │
+│   ├── week2
+│   │
+│   └── week3
+│
+│
 └──demo_results
 ---
 
@@ -300,6 +292,11 @@ labels/
 
 保存demo.py检测结果。
 
+## runs/train/
+
+yolo训练输出
+
+各训练模型权重、各指标图
 
 
 

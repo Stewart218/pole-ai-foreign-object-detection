@@ -1,19 +1,39 @@
-## Environment
+# =========================
+# Pole AI Project
+# YOLOv8 Foreign Object Detection
+# Python 3.9
+# =========================
 
-- Python 3.9
-- PyTorch 2.8
-- CUDA 12.6
-- YOLOv8 (Ultralytics)
 
+# Deep Learning
 torch==2.8.0
-torchvision==0.23.0
-torchaudio==2.8.0
-ultralytics==8.3.191
-opencv-python==4.12.0.88
-numpy==2.2.6
-pandas==2.3.2
-matplotlib==3.10.6
-seaborn==0.13.2
-jupyter==1.1.1
-tqdm==4.67.1
-PyYAML==6.0.2
+torchvision
+torchaudio
+
+
+# YOLO Framework
+ultralytics==8.4.89
+
+
+# Image Processing
+opencv-python
+Pillow
+
+
+# Data Processing
+numpy
+pandas
+scikit-learn
+pyyaml
+tqdm
+
+
+# Visualization
+matplotlib
+seaborn
+
+
+# Notebook Support
+jupyter
+notebook
+ipykernel

@@ -35,120 +35,121 @@
 # 2. Directory Structure
 
 Pole_AI_Project
-│
-├── README.md
-├── PROJECT_STRUCTURE.md
-├── requirements.txt
-├── demo.py
-│
-├── data
-│   │
-│   ├── raw
-│   │   └── pole_foreign_objects
-│   │       ├── 鸟巢
-│   │       ├── 气球
-│   │       ├── 塑料袋
-│   │       └── 其他异物
-│   │
-│   │
-│   ├── annotation
-│   │   ├── images
-│   │   │   ├── train
-│   │   │   └── val
-│   │   │
-│   │   └── labels
-│   │       ├── train
-│   │       └── val
-│   │
-│   │
-│   ├── augmented_dataset
-│   │   ├── images
-│   │   └── labels
-│   │
-│   │
-│   ├── processed
-│   │   ├── split
-│   │   │   ├── train
-│   │   │   ├── val
-│   │   │   └── test
-│   │   │
-│   │   └── dataset.yaml
-│   │
-│   │
-│   └── final_dataset
-│       │
-│       ├── images
-│       │   ├── train
-│       │   ├── val
-│       │   └── test
-│       │
-│       ├── labels
-│       │   ├── train
-│       │   ├── val
-│       │   └── test
-│       │
-│       ├── dataset.yaml
-│       └── final_dataset_readme.md
-│
-│
-├── models
-│   │
-│   └── best_model.pt
-│
-│
-├── src
-│   │
-│   ├──preprocess
-│   │   │
-│   │   ├── augment_yolo_dataset_v2.py
-│   │   ├── prepare_dataset_v2.py
-│   │   └── preprocess.py
-│   │
-│   ├── trainings
-│   │   │
-│   │   ├── compare_prediction.py
-│   │   ├── predict_final.py
-│   │   ├── visualize_results.py
-│   │   │
-│   │   └── train_experiments
-│   │       ├── train_aug_v2.py
-│   │       ├── train_baseline.py
-│   │       ├── train_lr_opt.py
-│   │       └── train_yolov8s.py
-│   │   
-│   ├── visualize_results.py
-│   │
-│   └── evaluation
-│      │
-│      ├── evaluate_test.py
-│      └── evaluate_all_models.py
-│   
-│
-├── runs
-│   │
-│   └── train
-│       │
-│       ├── baseline_yolov8n
-│       ├── week3_aug_v2
-│       ├── week3_yolov8s
-│       └── week3_lr_opt
-│
-│
-├── docs
-│    │
-│    ├── model_comparison.md
-│    ├── model_technical_summary.md
-│    ├── eveluation_metrics.md
-│    └── final_model_evaluation_report.md
-│
-├── results
-│   │
-│   ├── week2
-│   │
-│   └── week3
-│
-│
-└──demo_results
+
+    │
+    ├── README.md
+    ├── PROJECT_STRUCTURE.md
+    ├── requirements.txt
+    ├── demo.py
+    │
+    ├── data
+    │   │
+    │   ├── raw
+    │   │   └── pole_foreign_objects
+    │   │       ├── 鸟巢
+    │   │       ├── 气球
+    │   │       ├── 塑料袋
+    │   │       └── 其他异物
+    │   │
+    │   │
+    │   ├── annotation
+    │   │   ├── images
+    │   │   │   ├── train
+    │   │   │   └── val
+    │   │   │
+    │   │   └── labels
+    │   │       ├── train
+    │   │       └── val
+    │   │
+    │   │
+    │   ├── augmented_dataset
+    │   │   ├── images
+    │   │   └── labels
+    │   │
+    │   │
+    │   ├── processed
+    │   │   ├── split
+    │   │   │   ├── train
+    │   │   │   ├── val
+    │   │   │   └── test
+    │   │   │
+    │   │   └── dataset.yaml
+    │   │
+    │   │
+    │   └── final_dataset
+    │       │
+    │       ├── images
+    │       │   ├── train
+    │       │   ├── val
+    │       │   └── test
+    │       │
+    │       ├── labels
+    │       │   ├── train
+    │       │   ├── val
+    │       │   └── test
+    │       │
+    │       ├── dataset.yaml
+    │       └── final_dataset_readme.md
+    │
+    │
+    ├── models
+    │   │
+    │   └── best_model.pt
+    │
+    │
+    ├── src
+    │   │
+    │   ├──preprocess
+    │   │   │
+    │   │   ├── augment_yolo_dataset_v2.py
+    │   │   ├── prepare_dataset_v2.py
+    │   │   └── preprocess.py
+    │   │
+    │   ├── trainings
+    │   │   │
+    │   │   ├── compare_prediction.py
+    │   │   ├── predict_final.py
+    │   │   ├── visualize_results.py
+    │   │   │
+    │   │   └── train_experiments
+    │   │       ├── train_aug_v2.py
+    │   │       ├── train_baseline.py
+    │   │       ├── train_lr_opt.py
+    │   │       └── train_yolov8s.py
+    │   │   
+    │   ├── visualize_results.py
+    │   │
+    │   └── evaluation
+    │      │
+    │      ├── evaluate_test.py
+    │      └── evaluate_all_models.py
+    │   
+    │
+    ├── runs
+    │   │
+    │   └── train
+    │       │
+    │       ├── baseline_yolov8n
+    │       ├── week3_aug_v2
+    │       ├── week3_yolov8s
+    │       └── week3_lr_opt
+    │
+    │
+    ├── docs
+    │    │
+    │    ├── model_comparison.md
+    │    ├── model_technical_summary.md
+    │    ├── eveluation_metrics.md
+    │    └── final_model_evaluation_report.md
+    │
+    ├── results
+    │   │
+    │   ├── week2
+    │   │
+    │   └── week3
+    │
+    │
+    └──demo_results
 ---
 
 # 3. Directory Description

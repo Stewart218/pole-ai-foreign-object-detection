@@ -1,5 +1,7 @@
 # 输电线路异物智能检测项目复盘总结
 
+Github网址：https://github.com/Stewart218/pole-ai-foreign-object-detection
+
 ## 1. 项目背景与目标
 
 本项目面向输电线路巡检场景，基于深度学习目标检测技术，实现对鸟巢、气球、塑料袋以及其他异物的自动检测与定位。

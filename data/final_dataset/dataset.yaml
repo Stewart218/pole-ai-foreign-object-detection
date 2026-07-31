@@ -1,4 +1,4 @@
-path: E:\Pole_AI_Project\data\final_dataset
+path: data\final_dataset
 train: images/train
 val: images/val
 test: images/test

@@ -30,7 +30,7 @@ MODEL_PATH = (
     /
     "train"
     /
-    "week3_aug_v2"
+    "baseline"
     /
     "weights"
     /

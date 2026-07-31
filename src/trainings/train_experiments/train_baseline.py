@@ -78,7 +78,7 @@ class ProjectPaths:
         self.dataset_yaml = (
             self.project_root
             / "data"
-            / "processed"
+            / "final_dataset"
             / "dataset.yaml"
         )
 

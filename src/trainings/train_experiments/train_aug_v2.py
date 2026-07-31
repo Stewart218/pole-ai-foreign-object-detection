@@ -50,56 +50,58 @@ import torch
 # Path Configuration
 # ============================================================
 
+from pathlib import Path
 
-PROJECT_ROOT = Path(
-    r"E:\Pole_AI_Project"
+
+# 自动获取项目根目录
+# train_aug_v2.py位置:
+# src/trainings/train_experiments/train_aug_v2.py
+
+PROJECT_ROOT = (
+    Path(__file__)
+    .resolve()
+    .parents[3]
 )
 
+
+
+# Final Dataset
+# 最终数据集
 
 DATA_YAML = (
-
     PROJECT_ROOT
-
     /
-
     "data"
-
     /
-
-    "processed_augmented"
-
+    "final_dataset"
     /
-
     "dataset.yaml"
-
 )
 
 
+
+# pretrained model
 
 MODEL = "yolov8n.pt"
 
 
 
+# Training output directory
+
 SAVE_DIR = (
-
     PROJECT_ROOT
-
     /
-
     "runs"
-
     /
-
     "train"
-
 )
 
 
 
+# Experiment name
+
 EXPERIMENT_NAME = (
-
     "week3_aug_v2"
-
 )
 
 
